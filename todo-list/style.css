@@ -39,20 +39,32 @@ li {
     list-style: none;
 }
 
+input, button {
+    outline: none;
+}
+
 #task {
-    width: 600px;    
+    width: 600px;        
 }
 
 #task, #remove-task {   
-    height: 100px;
+    height: 150px;
     padding: 0;
 }
 
+
+
 @media(max-width: 750px) {
     #task {
-        width: 70vw;
+        width: 80vw;
         font-size: 0.9rem;
+        padding: 0;
     }
+
+    #task, #remove-task {   
+    height: 200px;
+    padding: 0;
+}
 }
 
 

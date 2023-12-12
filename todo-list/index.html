@@ -22,12 +22,15 @@
                 <button @click="addTasks" class="btn btn-success border-left-top-radius" type="button">Adicionar</button>
             </div>
         </form>
-
+       
         <ul id="tasks" class="d-flex justify-content-start align-items-center flex-column mt-5 p-0">
             <li v-for="(task, index) in tasksList" :key="index" class="mb-3">
-                <div class="d-flex justify-content-center align-items-center flex-row">                    
-                    <span id="task" class="d-flex flex-column justify-content-center align-items-center bg-secondary text-light rounded-start-3 m-0 p-4 lh-2 text-center text-break">{{ task }}</span>
+                <div class="d-flex justify-content-center align-items-center flex-row">   
+
+                    <span id="task" class="d-flex flex-column justify-content-center align-items-center bg-secondary text-light rounded-start-3 m-0 p-4 lh-2 text-center text-break" v-html="task">{{ task }}</span>                
+
                     <button @click="removeTask(index)" id="remove-task" class="bg-danger text-light rounded-end-2 border-0 m-0 p-2"><img class="bg-danger" src="./icons/x-lg.svg"></button>
+
                 </div>
             </li>
         </ul>   
