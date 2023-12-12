@@ -11,37 +11,30 @@
 <body>
     
     <div id="app">
-
+        
         <header class="d-flex flex-column justify-content-center align-items-center mt-5 mb-5">
-            <h1>Lista de tarefas</h1>
-            <span class="mb-4 mt-4">25 nov 2023</span>
-            <div>
-                <button type="button" class="btn btn-success m-2">Concluída</button>
-                <button type="button" class="btn btn-success m-2">Pendente</button>
-            </div>
+            <h1>Lista de tarefas</h1>                      
         </header>       
 
         <form class="d-flex justify-content-center align-items-center p-3">
             <div class="d-flex flex-row col-md-6">
-                <input type="text" class="form-control text-center border-right-bottom-radius" maxlength="20" minlength="3" placeholder="Digite uma tarefa">
-                <button class="btn btn-success border-left-top-radius" type="button">Adicionar</button>
+                <input v-model="taskInput"  @keypress.enter="addTasks" type="text" class="form-control text-center border-right-bottom-radius" maxlength="50" minlength="3" placeholder="Digite uma tarefa">
+                <button @click="addTasks" class="btn btn-success border-left-top-radius" type="button">Adicionar</button>
             </div>
         </form>
 
-
-        <ul class="d-flex justify-content-start align-items-center flex-column mt-5 p-0"> 
-
-            <li class="mb-3">
-                <div  class="d-flex justify-content-center align-items-center flex-row">
-                    <span class="bg-secondary text-light rounded-start-3 m-0 p-2 text-center text-center text-break">kkkkkkkk kkkkkkkkkkk</span>                    
-                    <button class="bg-danger text-light border-0 m-0 p-2"><img class="bg-danger" src="./icons/x-lg.svg"></button>
-                    <button class="bg-success text-light rounded-end-2 border-0 m-0 p-2"><img class="bg-success" src="./icons/check-lg.svg"></button>
+        <ul id="tasks" class="d-flex justify-content-start align-items-center flex-column mt-5 p-0">
+            <li v-for="(task, index) in tasksList" :key="index" class="mb-3">
+                <div class="d-flex justify-content-center align-items-center flex-row">                    
+                    <span id="task" class="d-flex flex-column justify-content-center align-items-center bg-secondary text-light rounded-start-3 m-0 p-4 lh-2 text-center text-break">{{ task }}</span>
+                    <button @click="removeTask(index)" id="remove-task" class="bg-danger text-light rounded-end-2 border-0 m-0 p-2"><img class="bg-danger" src="./icons/x-lg.svg"></button>
                 </div>
-            </li>                        
-                        
-        </ul>      
+            </li>
+        </ul>   
        
     </div>
-    <script src="./app.js"></script>
+
+    <script src="./app.js"></script> 
+
 </body>
 </html>

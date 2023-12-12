@@ -1,59 +1,57 @@
 const app = {
     data() {
         return {
-           content: document.querySelector('#app'), 
-           numberTasks: localStorage.getItem("numberTasks") || 0, 
-           task: 'teste'         
+            taskInput: '',
+            numberTasks: parseInt(localStorage.getItem("numberTasks") || 0),
+            tasksList: [],
+            dateTime:  localStorage.getItem("DateTime") || ''
         }
     },
-    methods: { 
+    methods: {
 
-        render() {            
+        getCurrentDateTime() {
+           setInterval(() => {
+                 const currentDateTime = new Date();
+                 const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'};
+                 const formattedDateTime = currentDateTime.toLocaleDateString('pt-BR', options);
+                 localStorage.setItem("DateTime", formattedDateTime);
+           }, 1000) 
+        },    
 
-        this.content.innerHTML = `
-
-        <header class="d-flex flex-column justify-content-center align-items-center mt-5 mb-5">
-            <h1>Lista de tarefas</h1>
-            <span class="mb-4 mt-4">25 nov 2023</span>
-            <div>
-                <button type="button" class="btn btn-success m-2">Concluída</button>
-                <button type="button" class="btn btn-success m-2">Pendente</button>
-            </div>
-        </header>       
-
-        <form class="d-flex justify-content-center align-items-center p-3">
-            <div class="d-flex flex-row col-md-6">
-                <input id="input" type="text" class="form-control text-center border-right-bottom-radius" maxlength="20" minlength="3" placeholder="Digite uma tarefa">
-                <button @click="setTasks()" class="btn btn-success border-left-top-radius" type="button">Adicionar</button>
-            </div>
-        </form> 
-
-        <ul id="list" class="d-flex justify-content-start align-items-center flex-column mt-5 p-0"> 
-
-        </ul>`
-        list.innerHTML = ''  
-
-        for(let i = 0; i < this.numberTasks - 1; i++) {                        
-            list.innerHTML += `
-            <li class="mb-3">
-                <div  class="d-flex justify-content-center align-items-center flex-row">
-                    <span class="bg-secondary text-light rounded-start-3 m-0 p-2 text-center text-center text-break">{{ task }}</span>                    
-                    <button class="bg-danger text-light border-0 m-0 p-2"><img class="bg-danger" src="./icons/x-lg.svg"></button>
-                    <button class="bg-success text-light rounded-end-2 border-0 m-0 p-2"><img class="bg-success" src="./icons/check-lg.svg"></button>
-                </div>
-            </li> `       
-        }        
-
+        getTasks() {
+            this.tasksList = [];
+            let count = 0;
+            for (let i = 0; i < this.numberTasks; i++) {
+                count += 1;
+                const taskDescription = localStorage.getItem(`task-${count}`);               
+                this.tasksList.push(taskDescription);
+            }
         },
 
-        
+        addTasks() {
+            if (this.taskInput !== '') {
+                this.numberTasks += 1;
+                localStorage.setItem(`task-${this.numberTasks}`, this.taskInput);
+                localStorage.setItem("numberTasks", this.numberTasks);
+                this.taskInput = '';
+
+                this.getTasks();
+            }
+        },
+
+        removeTask(index) {            
+            const taskId = index + 1; 
+            localStorage.removeItem(`task-${taskId}`);
+            
+            this.tasksList.splice(index, 1);
+            this.numberTasks -= 1
+            localStorage.setItem("numberTasks", this.numberTasks);
+        }
     },
     mounted() {
-        this.render()        
+        this.getTasks();
+        this.getCurrentDateTime();
     }
 }
 
-Vue.createApp(app).mount('#app')
-
-
-
+Vue.createApp(app).mount('#app');

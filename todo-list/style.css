@@ -13,6 +13,7 @@
 
 #app {
     background-color: var(--white);
+    padding: 30px 0 0 0;
 }
 
 .border-right-bottom-radius {
@@ -26,7 +27,7 @@
 
 ul {
     overflow-y: scroll;
-    max-height: 500px;
+    max-height: 600px;
     margin: 0;   
 }
 
@@ -37,5 +38,23 @@ ul::-webkit-scrollbar {
 li {
     list-style: none;
 }
+
+#task {
+    width: 600px;    
+}
+
+#task, #remove-task {   
+    height: 100px;
+    padding: 0;
+}
+
+@media(max-width: 750px) {
+    #task {
+        width: 70vw;
+        font-size: 0.9rem;
+    }
+}
+
+
 
 
